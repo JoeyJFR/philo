@@ -6,7 +6,7 @@
 /*   By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 13:03:37 by zjiang            #+#    #+#             */
-/*   Updated: 2025/03/15 12:45:09 by zjiang           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:30:06 by zjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_fork
 	t_mtx	fork_lock;
 	int		fork_id;
 	bool	created;
+	bool	taken;
 }	t_fork;
 
 typedef struct s_philo
@@ -104,6 +105,7 @@ long	get_time(t_time time_code, t_table *table);
 void	precise_usleep(long usec, t_table *table);
 void	write_status(t_status status, t_philo *philo, bool debug);
 void	free_table(t_table *table);
+int		check_forks(t_philo *philo);
 
 /* parse input*/
 void	parse_av(int ac, char *av[]);

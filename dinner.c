@@ -6,7 +6,7 @@
 /*   By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:13:33 by zjiang            #+#    #+#             */
-/*   Updated: 2025/03/15 12:19:42 by zjiang           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:30:08 by zjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ void	think(t_philo *philo)
 
 static void	eat(t_philo *philo)
 {
-	mutex_handle_guard(&(philo->first_fork->fork_lock), LOCK, philo->table);
-	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
-	mutex_handle_guard(&(philo->second_fork->fork_lock), LOCK, philo->table);
-	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
+	if (check_forks(philo))
+		return ;
 	set_long(&(philo->philo_lock), &(philo->last_meal_time),
 		get_time(MILLISECOND, philo->table), philo->table);
 	philo->meals_count++;
@@ -60,7 +58,9 @@ static void	eat(t_philo *philo)
 	if (philo->table->meals_to_meat > 0
 		&& philo->meals_count == philo->table->meals_to_meat)
 		set_bool(&(philo->philo_lock), &(philo->full), true, philo->table);
+	philo->first_fork->taken = false;
 	mutex_handle_guard(&(philo->first_fork->fork_lock), UNLOCK, philo->table);
+	philo->second_fork->taken = false;
 	mutex_handle_guard(&(philo->second_fork->fork_lock), UNLOCK, philo->table);
 }
 

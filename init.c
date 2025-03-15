@@ -6,7 +6,7 @@
 /*   By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 10:18:41 by zjiang            #+#    #+#             */
-/*   Updated: 2025/03/15 11:29:16 by zjiang           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:30:08 by zjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	set_fork_false(t_table *table)
 	{
 		fork = table->forks + i;
 		fork->created = false;
+		fork->taken = false;
 	}
 }
 

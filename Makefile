@@ -6,14 +6,14 @@
 #    By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 13:14:28 by zjiang            #+#    #+#              #
-#    Updated: 2025/03/15 08:58:56 by zjiang           ###   ########.fr        #
+#    Updated: 2025/03/15 15:30:08 by zjiang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=cc
 
 SRC=main.c parsing.c init.c dinner.c getter_setter.c sync.c monitor.c\
-utils1.c utils2.c\
+utils1.c utils2.c utils3.c\
 guarding.c
 
 OBJDIR=.obj
