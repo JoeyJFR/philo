@@ -6,7 +6,7 @@
 /*   By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 08:58:37 by zjiang            #+#    #+#             */
-/*   Updated: 2025/03/15 11:29:08 by zjiang           ###   ########.fr       */
+/*   Updated: 2025/03/15 11:58:35 by zjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static bool	philo_died(t_philo *philo)
 
 	if (get_bool(&(philo->philo_lock), &(philo->full), philo->table))
 		return (false);
-	elapsed = get_time(MILLISECOND, philo->table) - get_long(&(philo->philo_lock), &(philo->last_meal_time), philo->table);
+	elapsed = get_time(MILLISECOND, philo->table)
+		- get_long(&(philo->philo_lock),
+			&(philo->last_meal_time), philo->table);
 	time_to_die = philo->table->time_to_die / 1000;
 	if (elapsed > time_to_die)
 		return (true);
@@ -43,7 +45,8 @@ void	*monitor(void *arg)
 			if (philo_died(table->philos + i))
 			{
 				write_status(DIED, table->philos + i, DEBUG_MODE);
-				set_bool(&(table->table_lock), &(table->end_simulation), true, table);
+				set_bool(&(table->table_lock), &(table->end_simulation),
+					true, table);
 			}
 		}
 	}

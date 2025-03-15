@@ -6,7 +6,7 @@
 /*   By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 13:03:37 by zjiang            #+#    #+#             */
-/*   Updated: 2025/03/15 11:05:59 by zjiang           ###   ########.fr       */
+/*   Updated: 2025/03/15 12:19:41 by zjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <errno.h>
 # include <stdbool.h>
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table	t_table;
@@ -129,9 +129,11 @@ void	wait_all_philos(t_table *table);
 void	increase_long(t_mtx *lock, long *value, t_table *table);
 bool	all_philos_running(t_mtx *lock, long *threads,
 			long philo_nb, t_table *table);
+void	philo_wait(t_philo *philo);
 
 /* dinner */
 void	dinner_start(t_table *table);
+void	think(t_philo *philo);
 
 /* monitor */
 void	*monitor(void *arg);

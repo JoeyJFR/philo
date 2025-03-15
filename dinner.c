@@ -6,7 +6,7 @@
 /*   By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:13:33 by zjiang            #+#    #+#             */
-/*   Updated: 2025/03/15 10:18:42 by zjiang           ###   ########.fr       */
+/*   Updated: 2025/03/15 12:19:42 by zjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,30 @@ static void	*philo_1(void *arg)
 	table = (t_table *)arg;
 	philo = table->philos;
 	wait_all_philos(table);
-	set_long(&(philo->philo_lock), &(philo->last_meal_time), get_time(MILLISECOND, table), table);
+	set_long(&(philo->philo_lock), &(philo->last_meal_time),
+		get_time(MILLISECOND, table), table);
 	increase_long(&(table->table_lock), &(table->thread_running_nb), table);
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	while (!sim_finish(table))
 		usleep(100);
 	return (NULL);
 }
-// TO DO
-static void	think(t_philo *philo)
+
+void	think(t_philo *philo)
 {
+	long	t_eat;
+	long	t_sleep;
+	long	t_think;
+
 	write_status(THINKING, philo, DEBUG_MODE);
+	if (philo->table->philo_nb % 2 == 0)
+		return ;
+	t_eat = philo->table->time_to_eat;
+	t_sleep = philo->table->time_to_sleep;
+	t_think = t_eat * 2 - t_sleep;
+	if (t_think < 0)
+		t_think = 0;
+	precise_usleep(t_think * 0.5, philo->table);
 }
 
 static void	eat(t_philo *philo)
@@ -57,8 +70,11 @@ static void	*dinner_sim(void *arg)
 
 	philo = (t_philo *)arg;
 	wait_all_philos(philo->table);
-	set_long(&(philo->philo_lock), &(philo->last_meal_time), get_time(MILLISECOND, philo->table), philo->table);
-	increase_long(&(philo->table->table_lock), &(philo->table->thread_running_nb), philo->table);
+	set_long(&(philo->philo_lock), &(philo->last_meal_time),
+		get_time(MILLISECOND, philo->table), philo->table);
+	increase_long(&(philo->table->table_lock),
+		&(philo->table->thread_running_nb), philo->table);
+	philo_wait(philo);
 	while (!sim_finish(philo->table))
 	{
 		if (philo->full)
@@ -78,7 +94,8 @@ void	dinner_start(t_table *table)
 	if (table->meals_to_meat == 0)
 		return ;
 	else if (table->philo_nb == 1)
-		thread_handle_guard(&(table->philos[0].thread_id), philo_1, table, CREATE);
+		thread_handle_guard(&(table->philos[0].thread_id),
+			philo_1, table, CREATE);
 	else
 	{
 		i = -1;

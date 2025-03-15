@@ -6,7 +6,7 @@
 /*   By: zjiang <zjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:14:17 by zjiang            #+#    #+#             */
-/*   Updated: 2025/03/15 11:29:06 by zjiang           ###   ########.fr       */
+/*   Updated: 2025/03/15 11:58:35 by zjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ void	write_status(t_status status, t_philo *philo, bool debug)
 	{
 		if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK)
 			&& !sim_finish(philo->table))
-			printf("%-6ld %d has taken a fork.\n", elapsed, philo->philo_id);
+			printf("%-6ld %d has taken a fork\n", elapsed, philo->philo_id);
 		else if (status == EATING && !sim_finish(philo->table))
-			printf("%-6ld %d is eating.\n", elapsed, philo->philo_id);
+			printf("%-6ld %d is eating\n", elapsed, philo->philo_id);
 		else if (status == SLEEPING && !sim_finish(philo->table))
-			printf("%-6ld %d is sleeping.\n", elapsed, philo->philo_id);
+			printf("%-6ld %d is sleeping\n", elapsed, philo->philo_id);
 		else if (status == THINKING && !sim_finish(philo->table))
-			printf("%-6ld %d is thinking.\n", elapsed, philo->philo_id);
+			printf("%-6ld %d is thinking\n", elapsed, philo->philo_id);
 		else if (status == DIED && !sim_finish(philo->table))
-			printf("%-6ld %d is died.\n", elapsed, philo->philo_id);
+			printf("%-6ld %d is died\n", elapsed, philo->philo_id);
 	}
 	mutex_handle_guard(&(philo->table->write_lock), UNLOCK, philo->table);
 }
